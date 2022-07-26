@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -84,7 +85,7 @@ class ApacheHttpClientUtilTest extends BaseTest {
                 throw new RuntimeException(e);
             }
         };
-        MockWebServerTest.testRequestWithJson(mockWebServer, getHttpRequest, getResponse);
+        MockWebServerTest.testPostWithJson(mockWebServer, getHttpRequest, getResponse);
     }
 
     @Test
@@ -112,7 +113,7 @@ class ApacheHttpClientUtilTest extends BaseTest {
                 throw new RuntimeException(e);
             }
         };
-        MockWebServerTest.testRequestWithUrlEncodedForm(mockWebServer, getHttpRequest, getResponse);
+        MockWebServerTest.testPostWithUrlEncodedForm(mockWebServer, getHttpRequest, getResponse);
 
     }
 
@@ -127,6 +128,8 @@ class ApacheHttpClientUtilTest extends BaseTest {
                         new File(FileUtils.getFilePathByFileClassPath("test/test.jpg")),
                         new File(FileUtils.getFilePathByFileClassPath("test/test.txt"))));
             } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
             return HttpRequestWithMultipart.builder()
@@ -148,6 +151,6 @@ class ApacheHttpClientUtilTest extends BaseTest {
                 throw new RuntimeException(e);
             }
         };
-        MockWebServerTest.testRequestWithMultipartForm(mockWebServer, getHttpRequest, getResponse);
+        MockWebServerTest.testPostWithMultipartForm(mockWebServer, getHttpRequest, getResponse);
     }
 }
